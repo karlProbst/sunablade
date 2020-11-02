@@ -1,0 +1,9 @@
+[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://Materials/OutlineMaterial.tres" type="Material" id=1]
+
+[resource]
+next_pass = ExtResource( 1 )
+params_diffuse_mode = 4
+albedo_color = Color( 0.713726, 0.388235, 0.12549, 1 )
+roughness = 0.0

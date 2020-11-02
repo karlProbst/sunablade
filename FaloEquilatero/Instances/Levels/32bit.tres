@@ -1,0 +1,39 @@
+[gd_resource type="Environment" format=2]
+
+[resource]
+resource_local_to_scene = true
+background_energy = 1.4
+ambient_light_color = Color( 1, 0.866667, 0, 1 )
+ambient_light_energy = 0.17
+fog_enabled = true
+fog_color = Color( 0.701961, 1, 0.901961, 1 )
+fog_sun_color = Color( 0.0666667, 0, 0.658824, 1 )
+fog_sun_amount = 0.3
+fog_depth_enabled = false
+fog_depth_curve = 207.935
+fog_transmit_enabled = true
+fog_transmit_curve = 477.714
+fog_height_enabled = true
+fog_height_curve = 4.92457
+tonemap_mode = 3
+auto_exposure_enabled = true
+auto_exposure_scale = 0.24
+auto_exposure_min_luma = 0.0
+auto_exposure_max_luma = 16.0
+auto_exposure_speed = 0.77
+ss_reflections_max_steps = 126
+ss_reflections_fade_out = 3.03143
+ss_reflections_depth_tolerance = 128.0
+ssao_radius2 = 34.68
+ssao_quality = 2
+glow_enabled = true
+glow_intensity = 8.0
+glow_strength = 0.53
+glow_bloom = 0.42
+glow_blend_mode = 0
+glow_hdr_threshold = 1.62
+glow_hdr_luminance_cap = 12.56
+glow_hdr_scale = 4.0
+adjustment_enabled = true
+adjustment_brightness = 0.9
+adjustment_saturation = 1.98

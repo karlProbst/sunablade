@@ -1,0 +1,15 @@
+[gd_resource type="SpatialMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://Textures/LampEmissionMap.png" type="Texture" id=1]
+[ext_resource path="res://Textures/LampTexture.png" type="Texture" id=2]
+
+[resource]
+params_diffuse_mode = 4
+params_specular_mode = 3
+albedo_texture = ExtResource( 2 )
+emission_enabled = true
+emission = Color( 0.937255, 0.666667, 0.380392, 1 )
+emission_energy = 10.5
+emission_operator = 1
+emission_on_uv2 = false
+emission_texture = ExtResource( 1 )

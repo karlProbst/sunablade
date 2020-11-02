@@ -1,0 +1,14 @@
+[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://Textures/TreeTexture.png" type="Texture" id=1]
+
+[resource]
+flags_transparent = true
+flags_fixed_size = true
+params_diffuse_mode = 1
+params_specular_mode = 3
+params_cull_mode = 2
+params_line_width = 0.1
+albedo_texture = ExtResource( 1 )
+metallic = 0.57
+metallic_specular = 1.0

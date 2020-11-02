@@ -1,0 +1,11 @@
+[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://Textures/TreeTextureWoodDetailBaseColorLeafs.png" type="Texture" id=1]
+
+[resource]
+params_diffuse_mode = 4
+params_specular_mode = 3
+albedo_texture = ExtResource( 1 )
+metallic = 0.45
+metallic_specular = 0.13
+roughness = 0.0

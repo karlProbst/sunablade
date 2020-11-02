@@ -1,0 +1,193 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Scripts/PlayerController.gd" type="Script" id=1]
+[ext_resource path="res://Instances/Levels/ToonShaderTest.tres" type="Environment" id=2]
+[ext_resource path="res://Materials/MainPyramid.tres" type="Material" id=3]
+[ext_resource path="res://Instances/Characters/MonotoriTestBuneco.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/TargetRange.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/CamBaseFollow.gd" type="Script" id=6]
+[ext_resource path="res://dust/DustSpawner.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Instances/Objects/dust/Dust.tscn" type="PackedScene" id=8]
+
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.216257
+height = 0.63984
+
+[sub_resource type="CubeMesh" id=2]
+
+[sub_resource type="SphereShape" id=3]
+radius = 9.00009
+
+[sub_resource type="Animation" id=4]
+resource_name = "run"
+length = 1.45
+loop = true
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.3, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "spawnDust"
+}, {
+"args": [  ],
+"method": "spawnDust"
+} ]
+}
+
+[node name="Player" type="KinematicBody"]
+script = ExtResource( 1 )
+
+[node name="Dust" parent="." instance=ExtResource( 8 )]
+transform = Transform( -0.025, 0, -2.18557e-09, 0, 0.025, 0, 2.18557e-09, 0, -0.025, 0, 0, 0 )
+
+[node name="CamBase" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.768365, 0 )
+script = ExtResource( 6 )
+
+[node name="CamRay" type="RayCast" parent="CamBase"]
+transform = Transform( 1, 0, 0, 0, 4.35, 0, 0, 0, 1, 0, -0.146322, 0 )
+enabled = true
+
+[node name="Camera" type="Camera" parent="CamBase"]
+transform = Transform( 1, 0, 0, 0, 0.998212, 0.0597659, 0, -0.0597659, 0.998212, 0, 0.103554, 4.38844 )
+environment = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( -4.32252e-08, 1.2361, -4.32252e-08, 0, -5.40316e-08, -0.988877, -0.988877, -5.40316e-08, 1.88943e-15, 0, 0.618151, -0.00297166 )
+shape = SubResource( 1 )
+
+[node name="MonotoriTestBuneco" parent="." instance=ExtResource( 4 )]
+transform = Transform( -0.1, 0, -8.74228e-09, 0, 0.1, 0, 8.74228e-09, 0, -0.1, 0, 0, 0 )
+
+[node name="Up_Ray" type="RayCast" parent="MonotoriTestBuneco"]
+transform = Transform( -10.2734, 3.87577e-07, -3.72854e-14, 0, -1.93789e-07, -9.75706, -8.98126e-07, -4.43337, 4.26495e-07, 1.74846e-09, 11, -0.02 )
+visible = false
+enabled = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Cube" type="CSGMesh" parent="MonotoriTestBuneco/Up_Ray"]
+transform = Transform( 0.0289312, 0, 0, 0, 0.479394, 0, 0, 3.55271e-15, 0.0247413, 0, -0.520305, 0 )
+mesh = SubResource( 2 )
+material = ExtResource( 3 )
+
+[node name="Down_Ray" type="RayCast" parent="MonotoriTestBuneco"]
+transform = Transform( -10.2734, 3.87577e-07, -3.72854e-14, 0, -1.93789e-07, -9.75706, -8.98126e-07, -4.43337, 4.26495e-07, 1.74846e-09, 4, -0.02 )
+visible = false
+enabled = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Cube" type="CSGMesh" parent="MonotoriTestBuneco/Down_Ray"]
+transform = Transform( 0.0289312, 0, 0, 0, 0.479394, 0, 0, 3.55271e-15, 0.0247413, 0, -0.520305, 0 )
+mesh = SubResource( 2 )
+material = ExtResource( 3 )
+
+[node name="Left_Ray" type="RayCast" parent="MonotoriTestBuneco"]
+transform = Transform( -10.2734, 3.87577e-07, -3.72854e-14, 0, -1.93789e-07, -9.75706, -8.98126e-07, -4.43337, 4.26495e-07, -3, 6.93, -0.0200003 )
+visible = false
+enabled = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Cube" type="CSGMesh" parent="MonotoriTestBuneco/Left_Ray"]
+transform = Transform( 0.0289312, 0, 0, 0, 0.479394, 0, 0, 3.55271e-15, 0.0247413, 0, -0.520305, 0 )
+mesh = SubResource( 2 )
+material = ExtResource( 3 )
+
+[node name="Right_Ray" type="RayCast" parent="MonotoriTestBuneco"]
+transform = Transform( -10.2734, 3.87577e-07, -3.72854e-14, 0, -1.93789e-07, -9.75706, -8.98126e-07, -4.43337, 4.26495e-07, 3, 6.93, -0.0199997 )
+visible = false
+enabled = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Cube" type="CSGMesh" parent="MonotoriTestBuneco/Right_Ray"]
+transform = Transform( 0.0289312, 0, 0, 0, 0.479394, 0, 0, 3.55271e-15, 0.0247413, 0, -0.520305, 0 )
+mesh = SubResource( 2 )
+material = ExtResource( 3 )
+
+[node name="StatePanel" type="Panel" parent="."]
+margin_right = 260.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="StatePanel"]
+margin_top = 1.47018
+margin_right = 260.0
+margin_bottom = 15.4702
+text = "Current State:"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StateName" type="Label" parent="StatePanel"]
+margin_top = 20.0
+margin_right = 260.0
+margin_bottom = 34.0
+custom_colors/font_color = Color( 1, 0.984314, 0.0235294, 1 )
+text = "State Name"
+align = 1
+
+[node name="TargetRange" type="Area" parent="."]
+input_ray_pickable = false
+script = ExtResource( 5 )
+
+[node name="Sphere" type="CollisionShape" parent="TargetRange"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.636935, 0 )
+shape = SubResource( 3 )
+
+[node name="CoyoteJump" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
+[node name="Ground_Ray" type="RayCast" parent="."]
+transform = Transform( 1.05927, 0, 0, 0, 1.77843, 0, 0, 0, 1.05927, -0.000701666, 1.0764, -0.0256419 )
+enabled = true
+cast_to = Vector3( 0, -0.955, 0 )
+collide_with_areas = true
+
+[node name="Front_Ray" type="RayCast" parent="."]
+transform = Transform( 1.05292, 0, 0, 0, -1.96834e-08, -1, 0, 0.554158, -5.37926e-08, -0.000286222, 0.819521, -0.00971683 )
+enabled = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Cube" type="CSGMesh" parent="Front_Ray"]
+transform = Transform( 0.0289312, 0, 0, 0, 0.479394, 0, 0, 0, 0.0247413, 0, -0.520305, 0 )
+mesh = SubResource( 2 )
+material = ExtResource( 3 )
+
+[node name="DustSpawner" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1.27705, 0, 0, -0.000276594 )
+visible = false
+
+[node name="Upper_Front_Ray" type="RayCast" parent="."]
+transform = Transform( 1.02734, 0, 0, 0, -1.93789e-08, -0.975706, 0, 0.545584, -5.24858e-08, -0.000286222, 1.28024, -0.00205628 )
+enabled = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Cube" type="CSGMesh" parent="Upper_Front_Ray"]
+transform = Transform( 0.0289312, 0, 0, 0, 0.479394, 0, 0, 3.55271e-15, 0.0247413, 0, -0.520305, 0 )
+mesh = SubResource( 2 )
+material = ExtResource( 3 )
+
+[node name="DustAnimation" type="AnimationPlayer" parent="."]
+anims/run = SubResource( 4 )

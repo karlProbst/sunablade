@@ -1,0 +1,14 @@
+[gd_scene format=2]
+
+[node name="CamBase" type="Spatial"]
+transform = Transform( 1.98664, 0.0118979, 0.23048, -0.103829, 1.82987, 0.8005, -0.206112, -0.807117, 1.81826, -0.0476134, 4.59178, 4.24572 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 7.45058e-09, 0, 7.45058e-09, 1, -5.96046e-08, 0, -8.9407e-08, 1, 2.98023e-08, -4.76837e-07, -4.76837e-07 )
+fov = 109.2
+size = 10.0
+near = 0.03
+far = 8192.0
+
+[node name="CamRay" type="RayCast" parent="."]
+transform = Transform( 1, 7.45058e-09, 2.98023e-08, 1.86265e-08, 1, -1.78814e-07, 2.23517e-08, 0, 1, 1.28703, 4.07096, -11.3695 )

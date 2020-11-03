@@ -21,6 +21,7 @@ normal_texture = ExtResource( 2 )
 
 [sub_resource type="CylinderMesh" id=2]
 material = SubResource( 1 )
+flip_faces = true
 top_radius = 0.001
 bottom_radius = 4.0
 height = 4.0
@@ -36,6 +37,13 @@ can_sleep = false
 script = ExtResource( 1 )
 
 [node name="PORTAL" type="MeshInstance" parent="."]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.0301008, 0, 0.0309879 )
+extra_cull_margin = 1594.9
+use_in_baked_light = true
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="PORTAL2" type="MeshInstance" parent="."]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.0301008, 0, 0.0309879 )
 extra_cull_margin = 1594.9
 use_in_baked_light = true

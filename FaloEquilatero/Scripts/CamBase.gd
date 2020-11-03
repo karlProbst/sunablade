@@ -2,7 +2,7 @@ extends Spatial
 
 onready var rotSpd = 0
 var tiltSpd = 0
-
+onready var e 
 #HIS SOLUTION
 var originalCamZoom = null
 var originalCamVect = null
@@ -42,7 +42,7 @@ func _process(delta):
 		tiltSpd = 0
 	
 	rotSpd -= mouseSpeed.x * .01
-	tiltSpd -= mouseSpeed.y * .01
+	
 	
 	if Input.get_joy_name(0) != null:
 		var camRot = -Input.get_joy_axis(0, 2)
@@ -55,12 +55,12 @@ func _process(delta):
 
 	
 	var maxRotSpd = 2.5
-	var maxTiltSpd = 0
+	var maxTiltSpd = 2.5
 
 	rotSpd = max(min(rotSpd, maxRotSpd), -maxRotSpd)
 	tiltSpd = max(min(tiltSpd, maxTiltSpd), -maxTiltSpd)
 	
-	var e = rotation
+	e = rotation
 
 	if e.x > 0.05 and tiltSpd > 0:
 		tiltSpd = 0

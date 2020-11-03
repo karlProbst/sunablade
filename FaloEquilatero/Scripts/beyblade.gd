@@ -35,7 +35,7 @@ var t =0
 var t0 =0
 var won=false
 var xzvel = 0
-var decel = 20
+var decel = 13
 var won_y_lerp = 28
 var v1 = Vector3(0,0,0)
 var ssss= 0
@@ -109,7 +109,7 @@ func _process(delta):
 		vp.set_size(Vector2(600,300))	
 	if(init0==5):
 		t += delta *20
-	
+		cambase.rotSpd+=2
 		
 		vp.set_hdr(false)
 		t0+= delta* 0.5
@@ -177,8 +177,8 @@ func _process(delta):
 
 	if(won):
 		PhysicsServer.area_set_param(get_viewport().find_world().get_space(), PhysicsServer.AREA_PARAM_GRAVITY_VECTOR, Vector3(0, 28, 0))
-		print(grav)
-		print(lock)
+		this.set_mode(4)
+
 		we.environment.set_glow_strength(glow)
 		glow+=delta*0.2
 		if(glow>2):
@@ -233,11 +233,14 @@ func _process(delta):
 
 	if(!won):
 		var dist_art = this.get_global_transform()[3].distance_to(art.get_global_transform()[3])
-		glow = range_lerp(dist_art, 20, 60, .69, .1)
+		glow = range_lerp(dist_art, 30, 90, .61, .3)
 		we.environment.set_glow_strength(glow)
-
-
-	
+		var bb = range_lerp((abs(linear_velocity.y*1.5)/xzvel.length()+0.5), 1, 60, 0,15)
+		bb = stepify(bb, 0.1)
+		cambase.tiltSpd = -bb
+		cambase.tiltSpd += delta
+		
+		
 ##	var bodies = this.get_overlapping_bodies()
 #	if bodies.has(this):
 #		ground =false
@@ -255,7 +258,8 @@ func _process(delta):
 			charge_left-=delta
 		
 	if Input.is_action_pressed("2"):
-		mode = RigidBody.MODE_CHARACTER
+		this.apply_impulse(Vector3(0, 0,0),Vector3(0,-1,0)*-10)
+#		mode = RigidBody.MODE_CHARACTER
 	if Input.is_action_pressed("3"):
 		mode = RigidBody.MODE_STATIC
 	if Input.is_action_pressed("4"):

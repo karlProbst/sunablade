@@ -40,9 +40,8 @@ var mouseSpeed = Vector2()
 
 onready var player = get_tree().get_current_scene().get_node("vc/v/beyblade")
 onready var camera = player.get_node("CamBase")
-onready var this = get_tree().get_current_scene().get_node("vc/v/ViewportContainer/Viewport/Camera")
+onready var this = get_tree().get_current_scene().get_node("vc/v/DownVP")
 onready var vc = get_tree().get_current_scene().get_node("vc/v/ViewportContainer")
 func _process(delta):
-	vc.rect_rotation =  camera.rotation[1]*90
-	this.set_global_transform(Transform(Vector3(0,0,0),player.translation+Vector3(0,-0.1,0)))
-	this.rotation_degrees = Vector3(-90,0,0)
+#	this.rotation =  camera.rotation
+	this.set_global_transform(Transform(Vector3(0,0,0),player.translation+Vector3(0,0,0)))

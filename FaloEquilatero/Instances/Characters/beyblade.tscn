@@ -51,7 +51,7 @@ script = ExtResource( 5 )
 transform = Transform( 1.98664, 0.0118979, 0.23048, -0.103829, 1.82987, 0.8005, -0.206112, -0.807117, 1.81826, -0.0476134, 4.59178, 4.24572 )
 
 [node name="Camera" type="Camera" parent="CamBase"]
-transform = Transform( 2, -7.45058e-09, 2.47383e-10, 0, 1.99877, -0.0701479, 0, 0.0701479, 1.99877, 0.0040565, 2.30609, 4.711 )
+transform = Transform( 2, 3.25963e-09, -1.16415e-10, -3.25963e-09, 1.99877, -0.070148, 0, 0.0701479, 1.99877, 0.00405651, 2.30609, 7.27137 )
 fov = 179.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

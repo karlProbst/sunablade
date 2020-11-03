@@ -19,8 +19,8 @@ func _process(delta):
 	if a:
 		p.scale = lerp(p.scale,Vector3(50,50,50),delta*0.005)
 		p2.scale = lerp(p2.scale,Vector3(50,50,50),delta*0.005)
-		this.translation=lerp(this.translation,player.translation,1)
-	
+		this.translation=lerp(this.translation,player.translation,delta)
+		player.translation=lerp(player.translation,this.translation,delta)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

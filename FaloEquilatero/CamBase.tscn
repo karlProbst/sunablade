@@ -5,7 +5,7 @@ transform = Transform( 1.98664, 0.0118979, 0.23048, -0.103829, 1.82987, 0.8005, 
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 7.45058e-09, 0, 7.45058e-09, 1, -5.96046e-08, 0, -8.9407e-08, 1, 2.98023e-08, -4.76837e-07, -4.76837e-07 )
-fov = 109.2
+fov = 111.0
 size = 10.0
 near = 0.03
 far = 8192.0

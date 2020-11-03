@@ -1,6 +1,6 @@
 extends Spatial
 
-var rotSpd = 0
+onready var rotSpd = 0
 var tiltSpd = 0
 
 #HIS SOLUTION
@@ -14,17 +14,17 @@ var camRay
 var camera
 
 func _ready():
-
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	#HIS SOLUTION
-	originalCamVect = get_node("Camera").translation.normalized()
-	originalCamZoom = get_node("Camera").translation.length()
+	originalCamVect = Vector3(0,-20,0)
+	originalCamZoom = 1
 	#HIS SOLUTION
+	camera = self
+	camRay = camera.get_node("CamRay")
 	
-	camRay = get_node("CamRay")
-	camera = get_node("Camera")
-	
+
 	camRay.add_exception(get_node(".."))
 
 func _process(delta):
@@ -55,7 +55,7 @@ func _process(delta):
 
 	
 	var maxRotSpd = 2.5
-	var maxTiltSpd = 2.5
+	var maxTiltSpd = 0
 
 	rotSpd = max(min(rotSpd, maxRotSpd), -maxRotSpd)
 	tiltSpd = max(min(tiltSpd, maxTiltSpd), -maxTiltSpd)
@@ -78,15 +78,14 @@ func _process(delta):
 	
 	#His solution to camera clamp on walls
 	#HIS SOLUTION
-	var root = get_tree().get_root()
-	var toplevel = root.get_child(0)
+	var root = get_tree().get_root().get_node("node/vc/v/beyblade")
 
 	if get_parent().get_name() == "Player":  # Reparent
 		get_parent().remove_child(self)
-		toplevel.add_child(self)
+		root.add_child(self)
+	
 
-	var target = toplevel.get_node("Player")
-	print(target)
+	var target = root
 	if target != null:
 		var tt = target.translation
 		tt.y += 1

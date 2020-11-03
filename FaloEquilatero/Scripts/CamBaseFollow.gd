@@ -40,8 +40,8 @@ var mouseSpeed = Vector2()
 
 var camRay
 var camera
-onready var player = get_tree().get_current_scene().get_node("v/beyblade")
-onready var this = get_tree().get_current_scene().get_node("v/CamBase")
+onready var player = get_tree().get_current_scene().get_node("vc/v/beyblade")
+onready var this = get_tree().get_current_scene().get_node("vc/v/CamBase")
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
@@ -56,7 +56,7 @@ func _ready():
 	camRay.add_exception(get_node(".."))
 
 func _process(delta):
-	
+	print(player)
 	var friction = 0.01
 
 	if abs(rotSpd) > friction:

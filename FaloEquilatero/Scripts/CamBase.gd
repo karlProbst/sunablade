@@ -109,7 +109,7 @@ func _process(delta):
 	
 func _input(event):
 	
-	if event is InputEventMouseMotion:
-		mouseSpeed = event.relative
-	elif event is InputEventKey && event.pressed && event.scancode == KEY_F11:
+	
+	mouseSpeed = Vector2(0,0)
+	if event is InputEventKey && event.pressed && event.scancode == KEY_F11:
 		OS.set_window_maximized(not OS.is_window_maximized())

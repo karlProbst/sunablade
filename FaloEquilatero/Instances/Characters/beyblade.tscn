@@ -52,7 +52,8 @@ transform = Transform( 1.98664, 0.0118979, 0.23048, -0.103829, 1.82987, 0.8005, 
 
 [node name="Camera" type="Camera" parent="CamBase"]
 transform = Transform( 2, 3.25963e-09, -1.16415e-10, -3.25963e-09, 1.99877, -0.070148, 0, 0.0701479, 1.99877, 0.00405651, 2.30609, 7.27137 )
-fov = 179.0
+fov = 24.0
+far = 300.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 2.05967, -0.00456232, 0, -0.00456231, 0.615481, 0, 0, 0, 1.96318, 0.0067849, 2.14776, 0 )
@@ -60,6 +61,7 @@ shape = SubResource( 1 )
 
 [node name="joy" parent="." instance=ExtResource( 4 )]
 transform = Transform( -0.997015, -0.0787808, 0.0168251, 0.0759313, -1.10789, 0.0205481, 0.0152954, 0.0207231, 0.999672, -0.00499269, 1.63465, 0 )
+visible = false
 
 [node name="CollisionShape2" type="CollisionShape" parent="."]
 transform = Transform( 1.03202, 0.00325161, 0, 0.00325162, 2.0613, 0, 0, 0, 1.43338, -0.00169991, 2.42741, 0.0144526 )

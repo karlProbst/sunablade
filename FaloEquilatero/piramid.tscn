@@ -18,7 +18,7 @@ metallic_texture_channel = 2
 roughness_texture = ExtResource( 2 )
 emission_enabled = true
 emission = Color( 1, 0.478431, 0.0588235, 1 )
-emission_energy = 1.7
+emission_energy = 9.06
 emission_operator = 0
 emission_on_uv2 = true
 emission_texture = ExtResource( 2 )
@@ -51,7 +51,6 @@ material/0 = null
 
 [node name="PORTAL2" type="MeshInstance" parent="."]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, -0.0301008, 0, 0.0309879 )
-visible = false
 extra_cull_margin = 1594.9
 use_in_baked_light = true
 mesh = SubResource( 2 )

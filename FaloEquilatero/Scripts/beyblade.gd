@@ -13,8 +13,10 @@ onready var beyC = get_tree().get_current_scene().get_node("vc/v/beyblade/bey/be
 onready var eye = get_tree().get_current_scene().get_node("vc/v/beyblade/eye")
 onready var joy = get_tree().get_current_scene().get_node("vc/v/beyblade/joy")
 onready var vp = get_tree().get_current_scene().get_node("vc/v/")
+onready var vc = get_tree().get_current_scene().get_node("vc")
 onready var we = get_tree().get_current_scene().get_node("vc/v/WorldEnvironment")
 onready var art = get_tree().get_current_scene().get_node("vc/v/artifact0")
+onready var Shader = preload("res://inversetrip.shader")
 var level = 0
 var lock =0
 var l 
@@ -35,17 +37,24 @@ var t =0
 var t0 =0
 var won=false
 var xzvel = 0
-var decel = 13
+var decel = 10
 var won_y_lerp = 28
 var v1 = Vector3(0,0,0)
 var ssss= 0
 var a
 var c
 var pos
-var glow
+var glow = 0.5
+var teleport
+var spdr
 func _ready():
-	
-
+	if(Global.level == 2):
+		decel = 1
+	if(Global.level == 1):
+		decel = 5
+	if(Global.level == -1):
+		vc.material.shader = Shader
+		decel = 20
 	this.set_mode(2)
 	this.apply_impulse(Vector3(0, 0,0),Vector3(0,spd*300,0))
 func _process(delta):
@@ -59,8 +68,8 @@ func _process(delta):
 		camera.fov=130
 	
 	xzvel =Vector3(linear_velocity.z,linear_velocity.x,linear_velocity.y/2)
-	if(spd<1):
-		spd=1
+	if(spd<0.7):
+		spd=0.7
 	
 
 	if(linear_velocity.length()<6 and cair!=200):
@@ -74,9 +83,11 @@ func _process(delta):
 		cair = 200
 	if(this.mode == 2):
 	
-		beyC.rotate(Vector3(0, 1, 0), xzvel.length()/3*delta)
+		beyC.rotate(Vector3(0, 1, 0), spd*4*delta)
+#	print(spd*1.5)
 	if(beggining):
 		beyC.rotate(Vector3(0, 1, 0), -xzvel.length()/3*delta)
+		spd = 0
 	forward = Basis(get_viewport().get_camera().global_transform.basis).z
 	forward[1]=0
 	side = Basis(get_viewport().get_camera().global_transform.basis).x
@@ -89,25 +100,28 @@ func _process(delta):
 	
 	var bodies=get_colliding_bodies()
 	
-	spd = lerp(spd,xzvel.length()/decel,delta*0.2)
+	spd = lerp(spd,xzvel.length()/decel,delta*0.05)
+	spdr = spd * 1.2* range_lerp(ctimer,1,100,1,5)
 	if(bodies):
-		init0-=1
+		if(init0>-5):
+			init0-=1
 		charge_left = 1
+		ctimer = 0
 	if(charge_left>=0.01):
 		charge_left-=delta*0.01
-
-	if(bodies and xzvel.length()>30 and ctimer<=0 ):
+	
+	if(bodies and xzvel.length()>30 and ctimer>10 ):
 		vp.set_hdr(false)
 		vp.set_hdr(true)
-		print("yo")
-	if(ctimer>0):
-		ctimer-=delta*10
+	
+	
+	ctimer+=delta*10
 
 	
-	
-	if(init0==4):
-		vp.set_size(Vector2(600,300))	
+
 	if(init0==5):
+		camera.fov+=delta*3
+
 		t += delta *20
 		cambase.rotSpd+=2
 		
@@ -121,18 +135,18 @@ func _process(delta):
 	else:
 		t = 0
 	if(init0==4):
-		
+		vp.set_size(Vector2(600,300))	
+		cambase.tiltSpd = 15
 		beggining = false
-	if(init0==3):
-		pass
-			
+
+	
 	if(!beggining ):
 		t0+= delta* 5
 		vp.set_size(v_size)	
 		t += delta *2
 #		print(v_size)
 #		print(init0)
-		v_size=lerp(Vector2(600,300),Vector2(600,300),delta)
+		
 			
 #	if(v.get_size().length()<315 and !init0):
 #		t += delta * 0.001
@@ -143,9 +157,11 @@ func _process(delta):
 #
 #		v.set_size(Vector2(500,50))
 #		beggining=false
-
-	if(xzvel.z<-33 and !beggining):
-		won=false
+	
+	if(get_global_transform()[3].y<-270 and !beggining):
+		Global.level = -1
+		vc.material.shader = Shader
+		won=true
 	if(!won):
 #		print("pos0 = ",this.get_global_transform()[3])
 		pass
@@ -161,10 +177,10 @@ func _process(delta):
 		a[0] = stepify(a[0],0.1)
 		a[1] = stepify(a[1],0.1)
 		a[2] = stepify(a[2],0.1)
-		if abs(a[0]+a[2])>1:
-			vp.set_hdr(false)
-			vp.set_hdr(true)
-			ctimer=10
+#		if abs(a[0]+a[2])>1:
+#			vp.set_hdr(false)
+#			vp.set_hdr(true)
+#			ctimer=10
 			
 		
 	
@@ -174,15 +190,26 @@ func _process(delta):
 	#	 X   X   X    0     0   N N  N
 	#	  X X X X      0   0    N  N N
 	#	   X   X        000     N   NN
-
+	print(Global.level)
 	if(won):
-		PhysicsServer.area_set_param(get_viewport().find_world().get_space(), PhysicsServer.AREA_PARAM_GRAVITY_VECTOR, Vector3(0, 28, 0))
+		
+		
 		this.set_mode(4)
-
-		we.environment.set_glow_strength(glow)
+		
 		glow+=delta*0.2
-		if(glow>2):
-			vp.set_debug_draw(2)
+		we.environment.set_glow_strength(glow)
+		
+		if(lock == 0 and glow>1.4):
+			if(glow>1.4):
+				vp.set_debug_draw(2)
+				teleport = true
+				camera.fov=170
+				art.reset = true
+				glow = 0
+			lock = -1
+		if lock == -1 and camera.fov<60:
+			get_tree().reload_current_scene()
+	
 		if(lock == 10):
 			
 			v1 =c
@@ -209,16 +236,16 @@ func _process(delta):
 		
 		if(lock==3):
 			
-			won_y_lerp += delta*20
+			won_y_lerp += delta*100
 			beyC.rotation_degrees.z=lerp(beyC.rotation_degrees.z,180,delta)
 			vp.set_debug_draw(2)
 			this.set_global_transform(Transform(Vector3(0,0,0),Vector3(0,won_y_lerp,0)))
 		
 	
 		if get_global_transform()[3][1]>200:
-			camera.fov-=1
+			camera.fov-=delta
 		
-		camera.fov+=delta
+		camera.fov-=delta*20
 		cambase.tiltSpd -= 1
 		cambase.rotSpd+=2
 	if(!beggining and !won):
@@ -231,9 +258,9 @@ func _process(delta):
 		if(xzvel.length()>40):
 			pass
 
-	if(!won):
+	if(!won and init0<3):
 		var dist_art = this.get_global_transform()[3].distance_to(art.get_global_transform()[3])
-		glow = range_lerp(dist_art, 30, 90, .61, .3)
+		glow = range_lerp(dist_art, 10, 90, .41, .2)
 		we.environment.set_glow_strength(glow)
 		var bb = range_lerp((abs(linear_velocity.y*1.5)/xzvel.length()+0.5), 1, 60, 0,15)
 		bb = stepify(bb, 0.1)
@@ -253,7 +280,10 @@ func _process(delta):
 	l = linear_velocity
 	
 	if Input.is_action_pressed("1"):
-		this.apply_impulse(Vector3(0, 0,0),Vector3(0,-1,0)*charge_left*5*spd)
+		if(beggining):
+			
+			this.apply_impulse(Vector3(0, 0,0),Vector3(0,-1,0)*300*delta)
+		this.apply_impulse(Vector3(0, 0,0),Vector3(0,-1,0)*charge_left*7*spd)
 		if(charge_left>0):
 			charge_left-=delta
 		
@@ -274,18 +304,22 @@ func _process(delta):
 		if Input.is_action_pressed("forward"):
 			
 			joy.look_at(Vector3(0,1,0),Vector3(0,-20,10))
-			this.apply_impulse(Vector3(0, 0,0),-forward*spd)
+			this.apply_impulse(Vector3(0, 0,0),-forward*spdr)
 			
 		if Input.is_action_pressed("back"):
 			joy.look_at(Vector3(0,1,0),Vector3(0,-20,-10))
-			this.apply_impulse(Vector3(0, 0,0),forward*spd)
+			this.apply_impulse(Vector3(0, 0,0),forward*spdr)
 		if Input.is_action_pressed("right"):
 			joy.look_at(Vector3(0,1,0),Vector3(10,-20,0))
-			this.apply_impulse(Vector3(0, 0,0),side*spd)
+			this.apply_impulse(Vector3(0, 0,0),side*spdr)
 		if Input.is_action_pressed("left"):
 			joy.look_at(Vector3(0,1,0),Vector3(-10,-20,0))
-			this.apply_impulse(Vector3(0, 0,0),-side*spd)
-			
+			this.apply_impulse(Vector3(0, 0,0),-side*spdr)
+	if linear_velocity.y<=0 and init0==5:
+		if camera.fov<60:
+			camera.fov = 60
+		teleport = true
+		init0-=1
 func look_follow(state, current_transform, target_position):
 	var up_dir = Vector3(0, 1, 0)
 	var cur_dir = current_transform.basis.xform(Vector3(0, 0, 1))
@@ -306,11 +340,16 @@ func _integrate_forces(state):
 	if(won):
 		var target_position = Vector3(0,-1000,0)
 		look_follow(state, get_global_transform(), target_position)
-			
-	if(linear_velocity.y<=0 and init0==5):
+		
+	if(teleport):
 		xform.origin.y = 28
 		state.set_transform(xform)
 		vp.set_size(Vector2(30,15))	
-		init0-=1
-	
+		print("TELEPORTA")
+		teleport = false
 			
+func _on_body_enter(body):  # body is always passed as a parameter in this signal, check the Area2D documentation for 2.1    
+	if body.is_in_group("level"):  
+		print("Following!")  
+	print("Following!")  
+		

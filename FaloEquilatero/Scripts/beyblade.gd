@@ -258,11 +258,11 @@ func _process(delta):
 		if(xzvel.length()>40):
 			pass
 
-	if(!won and init0<3):
+	if(!won and init0<4):
 		var dist_art = this.get_global_transform()[3].distance_to(art.get_global_transform()[3])
-		glow = range_lerp(dist_art, 10, 90, .41, .2)
+		glow = range_lerp(dist_art, 10, 90, .3, .2)
 		we.environment.set_glow_strength(glow)
-		var bb = range_lerp((abs(linear_velocity.y*1.5)/xzvel.length()+0.5), 1, 60, 0,15)
+		var bb = range_lerp((abs(linear_velocity.y*2)/xzvel.length()+0.5), 1, 60, 0,15)
 		bb = stepify(bb, 0.1)
 		cambase.tiltSpd = -bb
 		cambase.tiltSpd += delta

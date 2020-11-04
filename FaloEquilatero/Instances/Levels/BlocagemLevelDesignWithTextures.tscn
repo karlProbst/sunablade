@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=2]
+[gd_scene load_steps=115 format=2]
 
 [ext_resource path="res://Instances/Levels/vc.gd" type="Script" id=1]
 [ext_resource path="res://Materials/TreeTestMaterial.tres" type="Material" id=2]
@@ -13,9 +13,7 @@
 [ext_resource path="res://conifero.tscn" type="PackedScene" id=12]
 [ext_resource path="res://funil.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scripts/CamBaseFollow.gd" type="Script" id=14]
-[ext_resource path="res://2dAssets/Untitled.png" type="Texture" id=15]
 [ext_resource path="res://Instances/Levels/vpfollow.gd" type="Script" id=16]
-[ext_resource path="res://2dAssets/2.png" type="Texture" id=17]
 
 [sub_resource type="ShaderMaterial" id=100]
 
@@ -1257,23 +1255,15 @@ viewport_path = NodePath("vc/v/ViewportContainer/Viewport")
 [sub_resource type="SpatialMaterial" id=98]
 resource_local_to_scene = true
 params_diffuse_mode = 2
-params_specular_mode = 2
+params_specular_mode = 1
+params_blend_mode = 1
 params_depth_draw_mode = 1
-params_line_width = 18.0
-params_point_size = 54.2
+params_line_width = 17.4
 params_billboard_keep_scale = true
 albedo_texture = SubResource( 97 )
 metallic = 0.56
 metallic_specular = 0.0
-roughness = 0.0
-roughness_texture = ExtResource( 15 )
 roughness_texture_channel = 1
-depth_enabled = true
-depth_scale = 16.0
-depth_deep_parallax = false
-depth_flip_tangent = false
-depth_flip_binormal = true
-depth_texture = ExtResource( 17 )
 uv1_triplanar_sharpness = 0.094732
 uv2_triplanar = true
 uv2_triplanar_sharpness = 1.10957
@@ -1297,9 +1287,9 @@ __meta__ = {
 
 [node name="vc" type="ViewportContainer" parent="."]
 material = SubResource( 100 )
-anchor_left = 1200.0
+anchor_left = 600.0
 anchor_right = 1200.0
-anchor_bottom = 600.0
+anchor_bottom = 300.0
 margin_left = -1.94773
 margin_top = 3.56761
 margin_right = 1200.0

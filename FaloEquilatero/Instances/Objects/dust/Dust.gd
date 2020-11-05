@@ -17,8 +17,8 @@ func _process(delta):
 		translation += Vector3(randi() %10 -5, randi() %10 -5, randi() %10 -5)/8
 		lock = true
 	translation.y += 0.015
-
+	
 	scale = scale.normalized() * (scale.length() + .005)
-	myMat.albedo_color.a -= 0.8*delta
-	if myMat.albedo_color.a <= 0:
+	myMat.albedo_color.r -= 0.8*delta
+	if myMat.albedo_color.r <= 0:
 		queue_free()

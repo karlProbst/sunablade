@@ -1,0 +1,22 @@
+[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+
+[sub_resource type="ViewportTexture" id=97]
+viewport_path = NodePath("vc/v/ViewportContainer/Viewport")
+
+[resource]
+resource_local_to_scene = true
+params_diffuse_mode = 2
+params_specular_mode = 1
+params_blend_mode = 1
+params_depth_draw_mode = 1
+params_line_width = 17.4
+params_billboard_keep_scale = true
+albedo_texture = SubResource( 97 )
+metallic = 0.56
+metallic_specular = 0.0
+roughness_texture_channel = 1
+uv1_triplanar_sharpness = 0.094732
+uv2_triplanar = true
+uv2_triplanar_sharpness = 1.10957
+proximity_fade_enable = true
+proximity_fade_distance = 0.11

@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="FaloEquilatero"
-run/main_scene="res://Instances/Levels/BlocagemLevelDesignWithTextures.tscn"
+run/main_scene="res://Instances/Levels/level2.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -95,6 +95,7 @@ left={
 3={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":51,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
 4={

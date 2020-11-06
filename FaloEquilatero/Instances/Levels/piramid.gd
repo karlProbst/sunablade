@@ -11,6 +11,7 @@ onready var player = get_tree().get_current_scene().get_node("vc/v/beyblade")
 onready var this = get_tree().get_current_scene().get_node("vc/v/artifact0")
 onready var p = get_tree().get_current_scene().get_node("vc/v/artifact0/PORTAL")
 onready var p2 = get_tree().get_current_scene().get_node("vc/v/artifact0/PORTAL2")
+var origin2 =  get_global_transform()[3]
 func _process(delta):
 	if(reset):
 		
@@ -22,9 +23,15 @@ func _process(delta):
 	var bodies=get_colliding_bodies()
 	
 	if(bodies and !a):
-		player.won=true
-		Global.level += 1
-		a = true
+		
+		print("WONNNNNNNNNN")
+		for body in bodies:
+			if(body.name=="RigidBody"):
+				
+				print("------------------------",body.name,"--------------------------")
+				Global.level += 1
+				a = true
+				player.won=true
 	if a:
 		p.scale = lerp(p.scale,Vector3(50,50,50),delta*0.005)
 		p2.scale = lerp(p2.scale,Vector3(50,50,50),delta*0.005)

@@ -78,10 +78,11 @@ use_in_baked_light = true
 mesh = SubResource( 3 )
 material/0 = null
 
-[node name="Particles" type="Particles" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0105796, 3.34896, 0 )
+[node name="Particles" type="Particles" parent="bey"]
+transform = Transform( 1, -9.31323e-10, 0, 9.31323e-10, 1, 0, 0, 0, 1, 0.00852454, 2.69844, 0 )
 layers = 2147483649
 material_override = ExtResource( 3 )
 use_in_baked_light = true
+amount = 30
 process_material = SubResource( 4 )
 draw_pass_1 = SubResource( 5 )

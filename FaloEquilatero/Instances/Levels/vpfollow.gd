@@ -28,6 +28,7 @@ onready var ray = get_tree().get_current_scene().get_node("vc/v/DownVp/RayCast")
 onready var bol = get_tree().get_current_scene().get_node("vc/v/DownVp/bolinha")
 onready var cm = get_tree().get_current_scene().get_node("vc/v/DownVp/CircularMesh")
 onready var cubo = get_tree().get_current_scene().get_node("vc/v/DownVp/cubo")
+onready var cubo2 = get_tree().get_current_scene().get_node("vc/v/DownVp/cubo2")
 onready var scene = get_tree().get_current_scene().get_node("vc/v/")
 var distance = 0
 var t = 0
@@ -35,17 +36,24 @@ var x1 = -1
 	
 	
 func _process(delta):
+#	ray
 	if ray.is_colliding():
 		var origin = ray.global_transform.origin
 		var collision_point = ray.get_collision_point()
 		distance = origin.distance_to(collision_point)
 	ray.add_exception(player)
-	cubo.scale.y = distance+5
-	cubo.translation.y = -5
+	ray.add_exception(cubo2)
+	ray.add_exception(bol)
+	cubo.scale.y = distance
+	
+	cubo.translation.y = 0
+	
+	
 	var x0=distance
 	if(distance>20):
 		x0 = 20
 	cubo.rotation.y+=delta*3		
+	
 	if(x1<0):
 		cubo.scale.x =range_lerp(x1,-1,0,0,0.2)
 		cubo.scale.z = range_lerp(x1,-1,0,0,0.2)
@@ -54,7 +62,16 @@ func _process(delta):
 		x1= range_lerp(x0,0,20,0.2,0.05)+rand_range(0.01,0.01)
 		cubo.scale.x = x1
 		cubo.scale.z = x1
-	this.translation = player.translation+Vector3(0,2.11-1.37,0)
+	cubo2.translation.y = 0
+	cubo2.rotation_degrees = player.bey.rotation_degrees
+#	cubo2.scale.y = range_lerp(player.spd,0,5,-0.1,-4)
+#	print(cubo2.scale.y," p=",player.spd)
+#	var x12 = range_lerp(x1,0.2,0.05,0.05,0.2)
+	cubo2.scale.x=x1
+	cubo2.scale.y=x1
+	cubo2.scale.z=x1
+	cubo2.rotation.y+=delta*3	
+	this.translation = player.translation+Vector3(0,0,0)
 
 	bol.translation = Vector3(0,distance,0)
 	var x2= distance/4

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="SpatialMaterial" id=99]
+
+[sub_resource type="SpatialMaterial" id=97]
+next_pass = SubResource( 99 )
+
+[sub_resource type="ParticlesMaterial" id=98]
+next_pass = SubResource( 97 )
+lifetime_randomness = 0.16
+gravity = Vector3( 0, 10, 0 )
+initial_velocity = 10.64
+initial_velocity_random = 0.15
+angular_velocity = 15.32
+angular_velocity_random = 0.05
+linear_accel = -2.13
+linear_accel_random = 0.17
+radial_accel = 6.38
+radial_accel_random = 0.2
+
+[sub_resource type="SphereMesh" id=100]
+
+[node name="Particles" type="Particles"]
+transform = Transform( 1, 0, 0, 0, 1, -2.79397e-09, 0, 0, 1, 0.220306, -3.97154, 0.255856 )
+amount = 50
+lifetime = 1.94
+preprocess = 2.97
+speed_scale = 4.2
+explosiveness = 0.12
+randomness = 0.18
+visibility_aabb = AABB( 0, 0, 0, 0, 0, 0 )
+process_material = SubResource( 98 )
+draw_pass_1 = SubResource( 100 )

@@ -186,7 +186,7 @@ func _process(delta):
 #		v.set_size(Vector2(500,50))
 #		beggining=false
 	
-	if(get_global_transform()[3].y<-270 and !beggining and !won):
+	if(get_global_transform()[3].y<-600 and !beggining and !won):
 		Global.level -= 1
 		vc.material.shader = ShaderB
 		won=true	

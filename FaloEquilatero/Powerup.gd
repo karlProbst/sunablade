@@ -24,6 +24,8 @@ func _process(delta):
 	var origin = self.translation
 	var v = Vector3(player.translation.x,player.translation.y-player.distance,player.translation.z)
 	var distance = origin.distance_to(v)
+	if(distance< 10+player.distance/4):
+		self.set_sleeping(false)
 #	var bodies=get_colliding_bodies()
 	print(distance)
 ##	decel = range_lerp(spd,0,5,maxdecel,300)

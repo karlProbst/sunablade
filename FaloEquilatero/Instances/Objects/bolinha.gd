@@ -8,8 +8,8 @@ func _ready():
 	
 	myMat = preload("bola.material").duplicate()
 	
-	for node in get_children():
-		var mat = node.set_surface_material(0, myMat)
+#	for node in get_children():
+#		var mat = node.set_surface_material(0, myMat)
 	
 	set_process(true)
 	

@@ -1,7 +1,7 @@
 
 extends RigidBody
 
-var max_speed = 30
+var maxspd = 5
 export (PackedScene) var cannon_ball=null
 var spd =2
 var can_shoot = true
@@ -20,6 +20,7 @@ onready var ShaderB = preload("res://inversetrip.shader")
 onready var ShaderG = preload("res://neutraltrip.shader")
 onready var ShaderN = preload("res://neutraltrip.shader")
 var level = 0
+var maxdecel = 20
 var lock =0
 var l 
 var ctimer = 0
@@ -39,7 +40,7 @@ var t =0
 var t0 =0
 var won=false
 var xzvel = 0
-export var decel = 10
+export var decel = 80
 var won_y_lerp = 28
 var v1 = Vector3(0,0,0)
 var ssss= 0
@@ -50,15 +51,15 @@ var glow = 0.5
 var teleport
 var spdr
 var cone = false
-var d
+var d = 0.3
 var bodies
 func _ready():
 	if(Global.level > 0):
 		vc.material.shader = ShaderG
-		decel = 30
+#		decel = 30
 	if(Global.level == 0):
 		vc.material.shader = ShaderN
-		decel =30
+#		decel =30
 	if(Global.level < 0):
 		vc.material.shader = ShaderB
 		decel = range_lerp(Global.level,0,-5,10,2)
@@ -104,16 +105,19 @@ func _process(delta):
 	eye.set_global_transform(Transform(Vector3(0,0,0),Vector3(this.translation.x-(linear_velocity.x/20),this.translation.y+10,this.translation.z-(linear_velocity.z/20))))
 	if(!beggining and !won):
 #		bey.look_at(Vector3(0,1,0),eye.translation)
-		bey.rotation_degrees.z= range_lerp(xzvel.z,-30,30,-10,10)
-		bey.rotation_degrees.x= range_lerp(xzvel.x,-30,30,-10,10)
+		bey.rotation_degrees.z= clamp(range_lerp(xzvel.z,-30,30,-10,10),-10,10)
+		bey.rotation_degrees.x= clamp(range_lerp(xzvel.x,-30,30,-10,10),-10,10)
 
 	bodies=get_colliding_bodies()
+#	decel = range_lerp(spd,0,5,maxdecel,300)
 	for body in bodies:
-		print(body.get_name())
+#		print(body.get_name())
+		pass
 	spd = lerp(spd,xzvel.length()/decel,delta*0.05)
-	spdr = spd * 1.2* range_lerp(ctimer,1,100,1,2)
+	spdr = spd * 1.2* clamp(range_lerp(ctimer,1,200,1,2),1,2)
+#	print(clamp(range_lerp(ctimer,1,130,1,2),1,2))
 	if(bodies):
-		print(bodies)
+#		print(bodies)
 		for body in bodies:
 			if body.is_in_group("cones"):
 				print("CONES")
@@ -128,11 +132,11 @@ func _process(delta):
 		charge_left-=delta*0.01
 	
 	if(bodies and xzvel.length()>30 and ctimer>10 ):
-#		vp.set_hdr(false)
-#		vp.set_hdr(true)
+		vp.set_hdr(false)
+		vp.set_hdr(true)
+		print(vp.get_hdr())
 		ctimer = 0
-	
-	
+#	print(we.get_auto_exposure_enabled())
 	ctimer+=delta*10
 
 	
@@ -303,7 +307,9 @@ func _process(delta):
 #	b.z.y = 0 # Crush Y so movement doesn't go into ground
 #	b.z = b.z.normalized()
 #	mv = b.xform(mv)
-	
+#	print("spd = ",spd," spdr = ",spdr," forward = ",forward," side = ",side)
+
+#	print(decel," spd = ",spd)
 func look_follow(state, current_transform, target_position):
 	var up_dir = Vector3(0, 1, 0)
 	var cur_dir = current_transform.basis.xform(Vector3(0, 0, 1))
@@ -322,9 +328,9 @@ func _integrate_forces(state):
 		if(beggining):
 			
 			this.apply_impulse(Vector3(0, 0,0),Vector3(0,-1,0)*300*d)
-		this.apply_impulse(Vector3(0, 0,0),Vector3(0,-1,0)*charge_left*7*spd)
-		if(charge_left<0):
-			charge_left-=d
+		this.apply_impulse(Vector3(0, 0,0),Vector3(0,-1,0)*30)
+#		if(charge_left>0):
+#			charge_left-=d
 		
 	if Input.is_action_pressed("2"):
 		this.apply_impulse(Vector3(0, 0,0),Vector3(0,1,0)*charge_left*7*spd)
@@ -343,21 +349,25 @@ func _integrate_forces(state):
 	if Input.is_action_pressed("e"):
 		cambase.rotSpd -=1
 
+	var xz = Vector3(this.linear_velocity.x,0,this.linear_velocity.z)
 	if(this.mode == 2 and !beggining):		
-
+	
 		if Input.is_action_pressed("forward"):
-			
-			joy.look_at(Vector3(0,1,0),Vector3(0,-20,10))
+#			print(-forward*maxspd*spd)
+#			if(xz*forward>xz*forward*maxspd):
 			this.apply_impulse(Vector3(0, 0,0),-forward*spdr)
-			
+#			else:
+#				print("MAXSPED")
 		if Input.is_action_pressed("back"):
-			joy.look_at(Vector3(0,1,0),Vector3(0,-20,-10))
+#			if(xz<forward*spd*maxspd):
 			this.apply_impulse(Vector3(0, 0,0),forward*spdr)
 		if Input.is_action_pressed("right"):
-			joy.look_at(Vector3(0,1,0),Vector3(10,-20,0))
+#			joy.look_at(Vector3(0,1,0),Vector3(10,-20,0))
+			
 			this.apply_impulse(Vector3(0, 0,0),side*spdr)
 		if Input.is_action_pressed("left"):
-			joy.look_at(Vector3(0,1,0),Vector3(-10,-20,0))
+#			joy.look_at(Vector3(0,1,0),Vector3(-10,-20,0))
+		
 			this.apply_impulse(Vector3(0, 0,0),-side*spdr)
 			
 	if linear_velocity.y<=0 and init0==5 :

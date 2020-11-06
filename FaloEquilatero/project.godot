@@ -128,9 +128,10 @@ q={
 
 [physics]
 
-common/physics_fps=120
+common/physics_fps=240
 3d/physics_engine="Bullet"
 3d/smooth_trimesh_collision=true
+3d/physics_fps=120
 
 [rendering]
 

@@ -58,7 +58,7 @@ func _ready():
 		vc.material.shader = ShaderG
 #		decel = 30
 	if(Global.level == 0):
-		vc.material.shader = ShaderN
+		pass
 #		decel =30
 	if(Global.level < 0):
 		vc.material.shader = ShaderB
@@ -134,7 +134,7 @@ func _process(delta):
 	if(bodies and xzvel.length()>30 and ctimer>10 ):
 		vp.set_hdr(false)
 		vp.set_hdr(true)
-		print(vp.get_hdr())
+		
 		ctimer = 0
 #	print(we.get_auto_exposure_enabled())
 	ctimer+=delta*10
@@ -150,7 +150,7 @@ func _process(delta):
 		vp.set_hdr(false)
 		t0+= delta* 0.5
 		if(t0>1):
-			vp.set_size(v_size)
+#			vp.set_size(v_size)
 #			v_size=lerp(Vector2(10,5),Vector2(600,300),t0)
 			t0=0
 		
@@ -162,8 +162,8 @@ func _process(delta):
 		elif(Global.level>0):
 			vp.set_size(Vector2(600/Global.level,300/Global.level))
 		else:
-			vp.set_size(Vector2(600,300))	
-		
+#			vp.set_size(Vector2(600,300))	
+			pass
 		cambase.tiltSpd = 15
 		beggining = false
 
@@ -328,12 +328,12 @@ func _integrate_forces(state):
 		if(beggining):
 			
 			this.apply_impulse(Vector3(0, 0,0),Vector3(0,-1,0)*300*d)
-		this.apply_impulse(Vector3(0, 0,0),Vector3(0,-1,0)*30)
-#		if(charge_left>0):
-#			charge_left-=d
+		this.apply_impulse(Vector3(0, 0,0),Vector3(0,-1,0)*20*spd)
+		if(charge_left>0):
+			charge_left-=d
 		
 	if Input.is_action_pressed("2"):
-		this.apply_impulse(Vector3(0, 0,0),Vector3(0,1,0)*charge_left*7*spd)
+		this.apply_impulse(Vector3(0, 0,0),Vector3(0,1,0)*17*spd)
 		if(charge_left>0):
 			charge_left-=d
 #		mode = RigidBody.MODE_CHARACTER

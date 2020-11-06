@@ -27,7 +27,7 @@ func _process(delta):
 	if(distance< 10+player.distance/4):
 		self.set_sleeping(false)
 #	var bodies=get_colliding_bodies()
-	print(distance)
+	
 ##	decel = range_lerp(spd,0,5,maxdecel,300)
 #	for body in bodies:
 #		print(bodies)
